@@ -1,0 +1,29 @@
+% Can't open configuration file /etc/frr/vtysh.conf due to 'No such file or directory'.
+Building configuration...
+
+Current configuration:
+!
+frr version 8.4_git
+frr defaults traditional
+hostname frr-routing
+no ipv6 forwarding
+!
+interface eth1
+ ip address 11.202.202.1/16
+ ip ospf network point-to-point
+exit
+!
+interface eth2
+ ip address 192.168.10.254/16
+exit
+!
+interface Ethernet2
+ ip ospf passive
+exit
+!
+router ospf
+ network 11.202.0.0/16 area 0
+ network 192.168.0.0/16 area 0
+exit
+!
+end
