@@ -1,19 +1,15 @@
 ---
 - hosts: all
-
   become: true
-  
   vars_files:
     - vault.yml
-    
   tasks:
     - name: Change root password
       user:
-       name: root
-       password: "{{ root_password }}"
-       
-  tasks:
-   - name: update apt packages
-     apt:
-      upgrade: yes
-      update_cache: yes
+        name: root
+        password: "{{ root_password }}"
+
+    - name: Update apt packages
+      apt:
+        upgrade: yes
+        update_cache: yes
