@@ -1,2 +1,2 @@
 [all]
-10.202.202.199
+10.202.202.199 ansible_user=root ansible_ssh_private_key_file=~/.ssh/id_rsa
