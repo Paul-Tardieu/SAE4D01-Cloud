@@ -1,7 +1,6 @@
 ---
 - hosts: all
   become: true
-  inventory: /root/Ansible-Playbooks/SAE4D01-Cloud/ansible-playbook/inventory
   vars_files:
     - vault.yml
   tasks:
