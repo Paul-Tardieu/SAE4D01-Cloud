@@ -1,1 +1,3 @@
-OCI runtime exec failed: exec failed: unable to start container process: exec: "CLI": executable file not found in $PATH: unknown
+
+> show running-config
+% Invalid input (privileged mode required) at line 1
