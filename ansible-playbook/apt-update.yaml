@@ -1,6 +1,7 @@
 ---
 - hosts: all
   become: true
+  inventory: /root/ansible
   vars_files:
     - vault.yml
   tasks:
