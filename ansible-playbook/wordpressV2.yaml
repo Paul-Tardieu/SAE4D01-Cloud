@@ -1,16 +1,16 @@
 - hosts: all
   become: yes
   tasks:
-    - name: Check if WordPress container exists and remove it
-      ansible.builtin.shell: docker inspect wordpress_container
-      register: container_inspect
-      ignore_errors: yes
-    
-    - name: Remove existing WordPress container if it exists
-      ansible.builtin.docker_container:
-        name: wordpress_container
-        state: absent
-      when: container_inspect|success
+  
+   - name: Stop existing WordPress and MySQL containers
+    ansible.builtin.command:
+      cmd: docker stop docker-wordpress-wordpress-1 docker-wordpress-db-1
+    ignore_errors: true
+  
+  - name: Remove existing WordPress and MySQL containers
+    ansible.builtin.command:
+      cmd: docker rm docker-wordpress-wordpress-1 docker-wordpress-db-1
+    ignore_errors: true
 
     - name: Create Docker Compose directory
       file:
