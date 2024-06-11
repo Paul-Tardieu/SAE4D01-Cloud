@@ -1,16 +1,15 @@
 - hosts: all
   become: yes
   tasks:
-  
-   - name: Stop existing WordPress and MySQL containers
-    ansible.builtin.command:
-      cmd: docker stop docker-wordpress-wordpress-1 docker-wordpress-db-1
-    ignore_errors: true
-  
-  - name: Remove existing WordPress and MySQL containers
-    ansible.builtin.command:
-      cmd: docker rm docker-wordpress-wordpress-1 docker-wordpress-db-1
-    ignore_errors: true
+    - name: Stop existing WordPress and MySQL containers
+      ansible.builtin.command:
+        cmd: docker stop docker-wordpress-wordpress-1 docker-wordpress-db-1
+      ignore_errors: true
+
+    - name: Remove existing WordPress and MySQL containers
+      ansible.builtin.command:
+        cmd: docker rm docker-wordpress-wordpress-1 docker-wordpress-db-1
+      ignore_errors: true
 
     - name: Create Docker Compose directory
       file:
