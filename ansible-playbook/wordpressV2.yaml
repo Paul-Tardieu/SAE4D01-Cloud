@@ -35,6 +35,13 @@
                 MYSQL_PASSWORD: wordpress
                 MYSQL_ROOT_PASSWORD: somewordpress
 
+    - name: Install iproute2 package
+      command: docker exec wordpress_container apt-get update && apt-get install -y iproute2
+      args:
+        creates: /usr/sbin/ip
+        environment:
+          DEBIAN_FRONTEND: noninteractive
+
     - name: Start WordPress with Docker Compose
       command: docker-compose up -d
       args:
