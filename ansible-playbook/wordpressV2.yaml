@@ -14,7 +14,7 @@
 
           services:
             wordpress:
-              image: wordpress
+              image: wordpress:6.5.4
               restart: always
               ports:
                 - 8080:80
