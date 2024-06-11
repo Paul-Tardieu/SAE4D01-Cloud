@@ -36,8 +36,8 @@
                 MYSQL_ROOT_PASSWORD: somewordpress
 
     - name: Install iproute2 package
-      command: docker exec wordpress_container apt-get update && apt-get install -y iproute2
-      args:
+      ansible.legacy.command:
+        cmd: docker exec wordpress_container apt-get update && apt-get install -y iproute2
         creates: /usr/sbin/ip
         environment:
           DEBIAN_FRONTEND: noninteractive
