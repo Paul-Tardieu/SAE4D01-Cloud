@@ -1,2 +1,2 @@
 [all]
-10.202.202.201 #ansible_user=test ansible_ssh_pass=test ansible_become_pass=test
+10.202.202.201 ansible_user=root ansible_ssh_pass=root ansible_become_pass=root
