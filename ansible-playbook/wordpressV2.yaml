@@ -1,0 +1,41 @@
+- hosts: all
+  become: yes
+  tasks:
+    - name: Create Docker Compose directory
+      file:
+        path: /root/docker-wordpress
+        state: directory
+
+    - name: Create Docker Compose file
+      copy:
+        dest: /root/docker-wordpress/docker-compose.yml
+        content: |
+          version: '3.1'
+
+          services:
+            wordpress:
+              image: wordpress
+              restart: always
+              ports:
+                - 8080:80
+              environment:
+                WORDPRESS_DB_HOST: db
+                WORDPRESS_DB_USER: wordpress
+                WORDPRESS_DB_PASSWORD: wordpress
+                WORDPRESS_DB_NAME: wordpress
+              cap_add:
+                - NET_ADMIN
+
+            db:
+              image: mysql:5.7
+              restart: always
+              environment:
+                MYSQL_DATABASE: wordpress
+                MYSQL_USER: wordpress
+                MYSQL_PASSWORD: wordpress
+                MYSQL_ROOT_PASSWORD: somewordpress
+
+    - name: Start WordPress with Docker Compose
+      command: docker-compose up -d
+      args:
+        chdir: /root/docker-wordpress
