@@ -16,15 +16,29 @@
         path: /root/docker-wordpress
         state: directory
 
+    - name: Create Dockerfile for custom WordPress image
+      copy:
+        dest: /root/docker-wordpress/Dockerfile
+        content: |
+          FROM wordpress:6.5.4
+          RUN apt-get update && \
+              apt-get install -y iproute2 iputils-ping nmap ncat && \
+              rm -rf /var/lib/apt/lists/*
+
+    - name: Build custom WordPress Docker image
+      ansible.builtin.command:
+        cmd: docker build -t custom_wordpress:latest /root/docker-wordpress
+      args:
+        chdir: /root/docker-wordpress
+
     - name: Create Docker Compose file
       copy:
         dest: /root/docker-wordpress/docker-compose.yml
         content: |
           version: '3.1'
-
           services:
             wordpress:
-              image: wordpress:6.5.4
+              image: custom_wordpress:latest
               restart: always
               ports:
                 - 8080:80
@@ -44,19 +58,9 @@
                 MYSQL_USER: wordpress
                 MYSQL_PASSWORD: wordpress
                 MYSQL_ROOT_PASSWORD: somewordpress
-    - name: Install required network tools
-      ansible.builtin.apt:
-        name: "{{ item }}"
-        state: present
-      loop:
-        - iproute2
-        - iputils-ping
-        - nmap
-        - ncat
-      environment:
-        DEBIAN_FRONTEND: noninteractive
 
     - name: Start WordPress with Docker Compose
-      command: docker-compose up -d
+      ansible.builtin.command:
+        cmd: docker-compose up -d
       args:
         chdir: /root/docker-wordpress
