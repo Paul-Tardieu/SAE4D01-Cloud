@@ -1,0 +1,38 @@
+name: srlceos400
+
+topology:
+  nodes:
+    ceos:
+      kind: arista_ceos
+      image: arista
+    frr-routing:
+      kind: linux
+      image: frrouting/frr
+      binds:
+        - router1/daemons:/etc/frr/daemons
+    switch:
+      kind: arista_ceos
+      image: arista
+    debianiut1:
+      kind: linux
+      image: debian
+    docker-wordpress-wordpress-1:
+      kind: ext-container
+    DNS:
+      kind: linux
+      image: debian-dns-image
+    pc1:
+      kind: linux
+      image: machine-image
+    docker-wordpress-db-1:
+      kind: ext-container
+
+  links:
+    - endpoints: ["ceos:eth2", "frr-routing:eth1"]
+    - endpoints: ["ceos:eth1", "macvlan:ens18"]
+    - endpoints: ["frr-routing:eth2", "switch:eth1"]
+    - endpoints: ["switch:eth2", "debianiut1:eth1"]
+    - endpoints: ["switch:eth4", "DNS:eth1"]
+    - endpoints: ["switch:eth5", "pc1:eth1"]
+    - endpoints: ["switch:eth6", "docker-wordpress-wordpress-1:eth0"]
+    - endpoints: ["switch:eth7", "docker-wordpress-db-1:eth0"]
