@@ -17,7 +17,7 @@
 
     - name: Build custom WordPress Docker image
       ansible.builtin.command:
-        cmd: docker build -t wordpressV3:latest /root/docker-wordpress
+        cmd: docker build -t wordpress-3:latest /root/docker-wordpress
       args:
         chdir: /root/docker-wordpress
 
@@ -28,7 +28,7 @@
           version: '3.1'
           services:
             wordpress:
-              image: wordpressV3:latest
+              image: wordpress-3:latest
               restart: always
               ports:
                 - 8080:80
